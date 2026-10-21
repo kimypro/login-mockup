@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iniciar sesión - Mockup</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Segoe UI", system-ui, sans-serif; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1e3c72, #2a5298 50%, #6dd5fa);
+    padding: 20px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 380px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px 34px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .35);
+    text-align: center;
+  }
+
+  .avatar {
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2a5298, #6dd5fa);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 40px;
+    box-shadow: 0 8px 20px rgba(42, 82, 152, .45);
+  }
+
+  h1 { font-size: 24px; color: #1e2a45; margin-bottom: 6px; }
+  .sub { font-size: 14px; color: #7a869e; margin-bottom: 26px; }
+
+  .campo { text-align: left; margin-bottom: 18px; }
+  .campo label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #44506b;
+    margin-bottom: 6px;
+  }
+
+  .input-capa { position: relative; }
+
+  .campo input {
+    width: 100%;
+    padding: 13px 14px;
+    font-size: 15px;
+    color: #1e2a45;
+    background: #f2f5fa;
+    border: 2px solid #e2e8f2;
+    border-radius: 10px;
+    outline: none;
+    transition: .2s;
+  }
+
+  .campo input:focus {
+    border-color: #2a5298;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(42, 82, 152, .12);
+  }
+
+  #ojo {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 17px;
+    color: #8b97ad;
+  }
+
+  .opciones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    margin-bottom: 22px;
+  }
+
+  .opciones a { color: #2a5298; text-decoration: none; font-weight: 600; }
+  .recuerda { display: flex; align-items: center; gap: 7px; color: #5a6785; }
+  .recuerda input { accent-color: #2a5298; width: 15px; height: 15px; }
+
+  .btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #2a5298, #3d7bd9);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .2s;
+    box-shadow: 0 8px 18px rgba(42, 82, 152, .35);
+  }
+
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(42, 82, 152, .45); }
+  .btn:active { transform: translateY(0); }
+
+  #mensaje {
+    margin-top: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    min-height: 20px;
+  }
+
+  .pie {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid #edf0f6;
+    font-size: 14px;
+    color: #7a869e;
+  }
+
+  .pie a { color: #2a5298; text-decoration: none; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="avatar">👤</div>
+  <h1>Bienvenido</h1>
+  <p class="sub">Inicia sesión para continuar</p>
+
+  <form id="form">
+    <div class="campo">
+      <label for="usuario">Usuario</label>
+      <div class="input-capa">
+        <input type="text" id="usuario" placeholder="Escribe tu usuario" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="clave">Contraseña</label>
+      <div class="input-capa">
+        <input type="password" id="clave" placeholder="••••••••">
+        <button type="button" id="ojo">👁</button>
+      </div>
+    </div>
+
+    <div class="opciones">
+      <label class="recuerda"><input type="checkbox"> Recuérdame</label>
+      <a href="#">¿Olvidaste tu contraseña?</a>
+    </div>
+
+    <button class="btn" type="submit">Ingresar</button>
+    <p id="mensaje"></p>
+  </form>
+
+  <p class="pie">¿No tienes cuenta? <a href="#">Regístrate</a></p>
+</div>
+
+<script>
+  const form = document.getElementById('form');
+  const msg = document.getElementById('mensaje');
+  const ojo = document.getElementById('ojo');
+  const clave = document.getElementById('clave');
+
+  ojo.onclick = () => {
+    const ver = clave.type === 'password';
+    clave.type = ver ? 'text' : 'password';
+    ojo.textContent = ver ? '🙈' : '👁';
+  };
+
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    const u = document.getElementById('usuario').value.trim();
+    const p = clave.value;
+
+    if (!u || !p) {
+      msg.style.color = '#e04242';
+      msg.textContent = '⚠ Completa ambos campos';
+    } else {
+      msg.style.color = '#1fa34a';
+      msg.textContent = '✅ ¡Bienvenido, ' + u + '!';
+    }
+  };
+</script>
+
+</body>
+</html>
